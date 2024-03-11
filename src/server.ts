@@ -1,8 +1,10 @@
 import fastify from 'fastify'
 import { knex } from './database'
+import 'dotenv/config'
+import { env } from './env'
 
 const app = fastify()
 
 app.get('/hello', async () => await knex('sqlite_schema').select('*'))
 
-app.listen({ port: 3333 }).then(() => console.log('HTTP Server Running!'))
+app.listen({ port: env.PORT }).then(() => console.log('HTTP Server Running!'))
