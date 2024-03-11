@@ -1,10 +1,11 @@
 import fastify from 'fastify'
-import { knex } from './database'
-import 'dotenv/config'
 import { env } from './env'
+import { transactionsRoutes } from './routes/transactions'
+import cookie from '@fastify/cookie'
 
 const app = fastify()
 
-app.get('/hello', async () => await knex('sqlite_schema').select('*'))
+app.register(cookie)
+app.register(transactionsRoutes, { prefix: 'transactions' })
 
 app.listen({ port: env.PORT }).then(() => console.log('HTTP Server Running!'))
